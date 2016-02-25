@@ -1,0 +1,1 @@
+NPM package for loading(reading) and saving(writing) files over socket.io
