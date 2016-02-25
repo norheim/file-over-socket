@@ -1,0 +1,22 @@
+{
+  "name": "file-over-socket",
+  "version": "1.0.0",
+  "description": "Package for loading(reading) and saving(writing) files over socket.io",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/norheim/file-over-socket.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/norheim/file-over-socket/issues"
+  },
+  "homepage": "https://github.com/norheim/file-over-socket#readme",
+  "dependencies": {
+    "socket.io": "^1.4.5"
+  }
+}
