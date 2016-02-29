@@ -40,23 +40,29 @@ app.listen(port, function(error) {
 io.on('connection', function(socket){
   	console.log('a user connected');
 
-    socket.on('client:readDirRequest', function(msg){
-      console.log('client:readDirRequest');
-      fs.readdir(path.join(__dirname, 'app'), (err, files) => {
+    socket.on('client:listDirRequest', function(foldername){
+      console.log('server: Bouncing listed files in folder '+foldername);
+
+      fs.readdir(path.join(__dirname, 'database', foldername), (err, filenames) => {
         if (err) {
           return console.log(err);
         }
-        socket.emit('server:readDirResponse',files);
+        socket.emit('server:listDirResponse'+foldername,filenames);
       });
     });
 
-  	socket.on('client:readFileRequest', function(filename){
-      console.log('reading '+filename);
-  		fs.readFile(path.join(__dirname, 'app', filename), 'utf8', function (err,data) {
+  	socket.on('client:readFileRequest', function(request){
+      var requestParsed = JSON.parse(request);
+      var folder = requestParsed.folder;
+      var filename = requestParsed.filename;
+
+      console.log('server: reading file '+folder+'/'+filename);
+  		fs.readFile(path.join(__dirname, 'database', folder, filename), 'utf8', function (err,data) {
 	  		if (err) {
 	    		return console.log(err);
 	  		}
-	  		socket.emit('server:readFileResponse', data)
+        console.log(data)
+	  		socket.emit('server:readFileResponse'+filename, data)
 		  });
   	});
 
