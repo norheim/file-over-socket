@@ -1,5 +1,9 @@
 import React from 'react';
 import path from 'path';
+import io from 'socket.io-client';
+let socketPort = 3010;
+let socket = io('http://localhost:' + socketPort.toString());
+socket.on('connect', function(){console.log('connected')});
 
 class FileExplorer extends React.Component {
 	constructor (props) {
@@ -12,22 +16,22 @@ class FileExplorer extends React.Component {
     this.readFiles = this.readFiles.bind(this);
 
     // List all files in directory
-    console.log(this.props.socket);
-    this.props.socket.on('connect', function(){console.log('connect')});
-    this.props.socket.on('server:listDirResponse'+this.props.folder, msg => {
+    console.log(socket);
+    socket.on('connect', function(){console.log('connect')});
+    socket.on('server:listDirResponse'+this.props.folder, msg => {
       console.log(msg);
       this.setState({filenames: msg});
     });
     console.log('made it this far')
-    this.props.socket.emit('client:listDirRequest', this.props.folder);
+    socket.emit('client:listDirRequest', this.props.folder);
     // Receive data from server
     this.readFiles(this.state.selectedfile);
   }
 
   readFiles (filename){
     if(filename != "default" && filename != ""){
-      this.props.socket.on('server:readFileResponse'+this.state.selectedFile, msg => {});
-      this.props.socket.on('server:readFileResponse'+filename, msg => {
+      socket.on('server:readFileResponse'+this.state.selectedFile, msg => {});
+      socket.on('server:readFileResponse'+filename, msg => {
         this.props.func(msg, filename);
       });
       this.setState({selectedfile: filename});
@@ -35,7 +39,7 @@ class FileExplorer extends React.Component {
         folder:this.props.folder, 
         filename:filename
       };
-      this.props.socket.emit('client:readFileRequest', JSON.stringify(fileRequestData));
+      socket.emit('client:readFileRequest', JSON.stringify(fileRequestData));
     }
   }
 

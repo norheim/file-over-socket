@@ -2,11 +2,6 @@ import React from 'react';
 import { render } from 'react-dom';
 import FileExplorer from './filexplorer.jsx';
 
-import io from 'socket.io-client';
-let socketPort = 3001;
-let socket = io('http://localhost:' + socketPort.toString());
-socket.on('connect', function(){console.log('connected')});
-
 class CodeEditor extends React.Component {
 	constructor (props) {
 		super(props);
@@ -61,7 +56,7 @@ class FileExplorerTest extends React.Component {
 	render () {
 		return (
 			<div>
-				<FileExplorer socket={socket} defaultFile='' folder='docs' func={docExpFunc}/>
+				<FileExplorer defaultFile='' folder='docs' func={docExpFunc}/>
 				<JsFileExplorerTest />
 			</div>
 		)
