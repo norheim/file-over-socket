@@ -1,7 +1,8 @@
 var path = require('path');
 var fs = require('fs');
+var socketPort = 3010;
 
-function filebackend(app, socketPort){
+function filebackend(app){
   var http = require('http').Server(app);
   var io = require('socket.io')(http);
   var databasePath = path.join(__dirname, '..', 'database');
@@ -44,3 +45,4 @@ function filebackend(app, socketPort){
 }
 
 exports.startSocket = filebackend;
+exports.socketPort = socketPort;

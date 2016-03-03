@@ -3,7 +3,7 @@ import path from 'path';
 import io from 'socket.io-client';
 let socketPort = 3010;
 let socket = io('http://localhost:' + socketPort.toString());
-socket.on('connect', function(){console.log('connected')});
+socket.on('connect', function(){console.log('connect')});
 
 class FileExplorer extends React.Component {
 	constructor (props) {
@@ -16,13 +16,10 @@ class FileExplorer extends React.Component {
     this.readFiles = this.readFiles.bind(this);
 
     // List all files in directory
-    console.log(socket);
-    socket.on('connect', function(){console.log('connect')});
     socket.on('server:listDirResponse'+this.props.folder, msg => {
       console.log(msg);
       this.setState({filenames: msg});
     });
-    console.log('made it this far')
     socket.emit('client:listDirRequest', this.props.folder);
     // Receive data from server
     this.readFiles(this.state.selectedfile);

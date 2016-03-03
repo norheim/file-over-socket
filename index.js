@@ -5,10 +5,9 @@ var webpackHotMiddleware = require('webpack-hot-middleware');
 var config = require('./webpack.config');
 var app = new require('express')();
 var port = 3000;
-var socketPort = 3001;
 var backend  = require('./src/file-backend');
 
-backend.startSocket(app, socketPort);
+backend.startSocket(app);
 var compiler = webpack(config);
 app.use(webpackDevMiddleware(compiler, { 
 		noInfo: true,
