@@ -38,7 +38,7 @@ class JsFileExplorerTest extends React.Component {
 	render () {
 		return (
 			<div>
-			    <FileExplorer socket={socket} defaultFile='' folder='cells' func={this.jsExpFunc}/> 
+			    <FileExplorer socket={socket} defaultFile='default' folder='cells' func={this.jsExpFunc}/> 
 				{this.state.editor}
 			</div>
 		)

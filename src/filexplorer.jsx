@@ -18,13 +18,14 @@ class FileExplorer extends React.Component {
       console.log(msg);
       this.setState({filenames: msg});
     });
+    console.log('made it this far')
     this.props.socket.emit('client:listDirRequest', this.props.folder);
     // Receive data from server
     this.readFiles(this.state.selectedfile);
   }
 
   readFiles (filename){
-    if(filename != "default"){
+    if(filename != "default" && filename != ""){
       this.props.socket.on('server:readFileResponse'+this.state.selectedFile, msg => {});
       this.props.socket.on('server:readFileResponse'+filename, msg => {
         this.props.func(msg, filename);
