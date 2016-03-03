@@ -15,12 +15,10 @@ function filebackend(app, socketPort){
 
     socket.on('client:listDirRequest', function(foldername){
       console.log('server: Bouncing listed files in folder '+foldername);
-      console.log('readdir '+path.join(databasePath, foldername));
       fs.readdir(path.join(databasePath, foldername), (err, filenames) => {
         if (err) {
           return console.log(err);
         }
-        console.log('read dir properly');
         socket.emit('server:listDirResponse'+foldername,filenames);
       });
     });
@@ -31,13 +29,10 @@ function filebackend(app, socketPort){
       var filename = requestParsed.filename;
 
       console.log('server: reading file '+folder+'/'+filename);
-      console.log('readFile '+path.join(databasePath, folder, filename));
-      console.log('reafFile'+filename);
       fs.readFile(path.join(databasePath, folder, filename), 'utf8', function (err,data) {
         if (err) {
           return console.log(err);
         }
-        console.log(data)
         socket.emit('server:readFileResponse'+filename, data)
       });
     });
